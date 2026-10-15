@@ -1,0 +1,68 @@
+﻿@model Smart_Egypt_Ticket.Models.Cart
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<h1>Your Cart</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (!Model.Items.Any())
+{
+    <p class="text-muted">Your cart is empty.</p>
+    <a asp-controller="Destinations" asp-action="Index" class="btn btn-primary">Browse Destinations</a>
+}
+else
+{
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Monument</th>
+                <th>Ticket Type</th>
+                <th>Visit Date</th>
+                <th>Qty</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.MonumentName</td>
+                    <td>@item.TicketTypeName</td>
+                    <td>@item.VisitDate.ToString("dd MMM yyyy")</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.UnitPrice.ToString("0.00") EGP</td>
+                    <td>@item.Total.ToString("0.00") EGP</td>
+                    <td>
+                        <form asp-action="Remove" method="post">
+                            <input type="hidden" name="ticketTypeId" value="@item.TicketTypeId" />
+                            <input type="hidden" name="visitDate" value="@item.VisitDate.ToString("yyyy-MM-dd")" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-end fw-bold">Grand Total</td>
+                <td class="fw-bold">@Model.GrandTotal.ToString("0.00") EGP</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="d-flex justify-content-between">
+        <form asp-action="Clear" method="post">
+            <button type="submit" class="btn btn-outline-secondary">Clear Cart</button>
+        </form>
+        <a asp-controller="Orders" asp-action="Checkout" class="btn btn-primary btn-lg">Proceed to Checkout →</a>
+    </div>
+}

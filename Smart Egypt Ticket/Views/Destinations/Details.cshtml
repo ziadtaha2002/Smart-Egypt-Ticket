@@ -1,0 +1,85 @@
+﻿@model Smart_Egypt_Ticket.Models.Destination
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<!-- Hero banner -->
+<div class="position-relative mb-4" style="height: 380px; overflow: hidden; border-radius: 12px;">
+    <img src="@Model.ImageUrl" alt="@Model.Name"
+         style="width: 100%; height: 100%; object-fit: cover;"
+         onerror="this.src='https://placehold.co/1200x380?text=No+Image'" />
+    <div class="position-absolute bottom-0 start-0 w-100 p-4"
+         style="background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);">
+        <span class="badge bg-warning text-dark mb-2">📍 @Model.City</span>
+        <h1 class="text-white fw-bold">@Model.Name</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <h4 class="mb-3">About</h4>
+        <p class="text-muted fs-5">@Model.Description</p>
+
+        <hr class="my-4" />
+
+        <h4 class="mb-3">Monuments &amp; Sites</h4>
+
+        @if (!Model.Monuments.Any())
+        {
+            <p class="text-muted">No monuments added yet.</p>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var monument in Model.Monuments)
+                {
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <img src="@monument.ImageUrl" class="card-img-top" alt="@monument.Name"
+                                 style="height: 160px; object-fit: cover;"
+                                 onerror="this.src='https://placehold.co/400x160?text=No+Image'" />
+                            <div class="card-body">
+                                <h5 class="card-title">@monument.Name</h5>
+                                <p class="card-text text-muted small">@monument.Description</p>
+
+                                @if (!string.IsNullOrEmpty(monument.OpeningHours))
+                                {
+                                    <p class="mb-2"><i class="bi bi-clock"></i> <strong>Hours:</strong> @monument.OpeningHours</p>
+                                }
+
+                                @if (monument.TicketTypes.Any())
+                                {
+                                    <div class="border-top pt-2">
+                                        @foreach (var ticket in monument.TicketTypes)
+                                        {
+                                            <form asp-controller="Cart" asp-action="Add" method="post" class="d-flex align-items-center justify-content-between mb-2 flex-wrap gap-1">
+                                                <input type="hidden" name="ticketTypeId" value="@ticket.Id" />
+                                                <span class="flex-grow-1">@ticket.Name — <strong>@ticket.Price.ToString("0.00") EGP</strong></span>
+                                                <input type="date" name="visitDate" class="form-control form-control-sm" style="width: 140px;"
+                                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+                                                <input type="number" name="quantity" value="1" min="1" class="form-control form-control-sm" style="width: 70px;" />
+                                                <button type="submit" class="btn btn-sm btn-success">Add</button>
+                                            </form>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm p-3 sticky-top" style="top: 20px;">
+            <h5 class="mb-3">Book Your Visit</h5>
+            <p class="text-muted small">Select a monument above to choose ticket type and quantity.</p>
+            <a asp-controller="Cart" asp-action="Index" class="btn btn-primary w-100 mb-2">🛒 View Cart</a>
+            <a asp-action="Index" class="btn btn-outline-secondary w-100 mb-2">← Back to Destinations</a>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary w-100">Edit Destination</a>
+        </div>
+    </div>
+</div>
