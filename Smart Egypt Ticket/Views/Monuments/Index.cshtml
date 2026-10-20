@@ -1,0 +1,37 @@
+@model IEnumerable<Smart_Egypt_Ticket.Models.Monument>
+
+@{
+    ViewData["Title"] = "Manage Monuments";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Manage Monuments</h1>
+    <a asp-action="Create" class="btn btn-primary">Add monument</a>
+</div>
+
+<table class="table align-middle">
+    <thead>
+        <tr><th>Name</th><th>Destination</th><th>Opening hours</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var monument in Model)
+        {
+            <tr>
+                <td>@monument.Name</td>
+                <td>@monument.Destination?.Name</td>
+                <td>@monument.OpeningHours</td>
+                <td>@(monument.IsActive ? "Active" : "Inactive")</td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@monument.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                    @if (monument.IsActive)
+                    {
+                        <form asp-action="Delete" asp-route-id="@monument.Id" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button class="btn btn-sm btn-outline-danger" type="submit">Deactivate</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

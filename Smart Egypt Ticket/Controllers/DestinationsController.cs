@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Smart_Egypt_Ticket.Data;
 using Smart_Egypt_Ticket.Models;
 
 namespace Smart_Egypt_Ticket.Controllers
 {
+    [Authorize]
     public class DestinationsController : Controller
     {
         private readonly ApplicationDbContext _context;

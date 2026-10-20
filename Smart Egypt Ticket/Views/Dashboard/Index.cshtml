@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h1>Admin Dashboard</h1>
+<div class="row g-3 mb-4">
+    <div class="col-md-4"><div class="card shadow-sm"><div class="card-body"><h6>Destinations</h6><h2>@ViewBag.DestinationCount</h2></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm"><div class="card-body"><h6>Monuments</h6><h2>@ViewBag.MonumentCount</h2></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm"><div class="card-body"><h6>Ticket types</h6><h2>@ViewBag.TicketTypeCount</h2></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm"><div class="card-body"><h6>Total orders</h6><h2>@ViewBag.OrderCount</h2></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm"><div class="card-body"><h6>Paid orders</h6><h2>@ViewBag.PaidOrderCount</h2></div></div></div>
+    <div class="col-md-4"><div class="card shadow-sm"><div class="card-body"><h6>Revenue</h6><h2>@((decimal)ViewBag.Revenue).ToString("0.00") EGP</h2></div></div></div>
+</div>
+
+<div class="d-flex gap-2">
+    <a asp-area="" asp-controller="Monuments" asp-action="Index" class="btn btn-primary">Manage monuments</a>
+    <a asp-area="" asp-controller="TicketTypes" asp-action="Index" class="btn btn-primary">Manage ticket types</a>
+    <a asp-area="" asp-controller="Destinations" asp-action="Index" class="btn btn-outline-secondary">View catalog</a>
+</div>

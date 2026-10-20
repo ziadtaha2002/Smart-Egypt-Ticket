@@ -1,0 +1,223 @@
+@model Smart_Egypt_Ticket.DTO.LoginUserDTO
+
+@{
+	ViewData["Title"] = "Login";
+}
+
+<div class="auth-page">
+	<div class="auth-card">
+		<div class="auth-header">
+			<div class="logo">
+				<span class="logo-icon">🎫</span>
+				<span>Smart Egypt Ticket</span>
+			</div>
+
+			<h1>Welcome Back</h1>
+			<p>Login to continue managing your tickets.</p>
+		</div>
+
+		<form asp-action="Login" asp-controller="Account" method="post" class="auth-form">
+			<div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+			<div class="form-group">
+				<label asp-for="Email">Email Address</label>
+				<input asp-for="Email"
+					   type="email"
+					   class="form-control"
+					   placeholder="Enter your email address"
+					   autocomplete="email" />
+				<span asp-validation-for="Email" class="validation-message"></span>
+			</div>
+
+			<div class="form-group">
+				<div class="password-label">
+					<label asp-for="Password">Password</label>
+					<a asp-controller="Account"
+					   asp-action="ForgotPassword"
+					   class="forgot-password">
+						Forgot password?
+					</a>
+				</div>
+
+				<input asp-for="Password"
+					   type="password"
+					   class="form-control"
+					   placeholder="Enter your password"
+					   autocomplete="current-password" />
+				<span asp-validation-for="Password" class="validation-message"></span>
+			</div>
+
+			<button type="submit" class="btn-login">
+				Login
+			</button>
+		</form>
+
+		<div class="register-link">
+			Don't have an account?
+			<a asp-controller="Account" asp-action="Register">Create an account</a>
+		</div>
+	</div>
+</div>
+
+@section Styles {
+	<style>
+		.auth-page {
+			min-height: calc(100vh - 160px);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 40px 20px;
+			background: #f5f7fb;
+		}
+
+		.auth-card {
+			width: 100%;
+			max-width: 460px;
+			padding: 42px;
+			background: #fff;
+			border-radius: 20px;
+			box-shadow: 0 12px 35px rgba(20, 39, 74, 0.1);
+		}
+
+		.auth-header {
+			margin-bottom: 30px;
+			text-align: center;
+		}
+
+		.logo {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 9px;
+			margin-bottom: 28px;
+			color: #1261a0;
+			font-size: 20px;
+			font-weight: 700;
+		}
+
+		.logo-icon {
+			font-size: 25px;
+		}
+
+		.auth-header h1 {
+			margin: 0 0 8px;
+			color: #172b4d;
+			font-size: 30px;
+			font-weight: 700;
+		}
+
+		.auth-header p {
+			margin: 0;
+			color: #718096;
+			font-size: 15px;
+		}
+
+		.auth-form {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+
+		.form-group {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.form-group label {
+			color: #27364d;
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		.password-label {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.forgot-password {
+			color: #1261a0;
+			font-size: 13px;
+			text-decoration: none;
+		}
+
+		.forgot-password:hover,
+		.register-link a:hover {
+			text-decoration: underline;
+		}
+
+		.form-control {
+			width: 100%;
+			box-sizing: border-box;
+			padding: 13px 15px;
+			border: 1px solid #d9e1ec;
+			border-radius: 9px;
+			outline: none;
+			color: #27364d;
+			font-size: 14px;
+			transition: border-color 0.2s, box-shadow 0.2s;
+		}
+
+		.form-control:focus {
+			border-color: #1261a0;
+			box-shadow: 0 0 0 3px rgba(18, 97, 160, 0.12);
+		}
+
+		.form-control::placeholder {
+			color: #a0aec0;
+		}
+
+		.btn-login {
+			margin-top: 4px;
+			padding: 14px;
+			border: 0;
+			border-radius: 9px;
+			background: #1261a0;
+			color: #fff;
+			cursor: pointer;
+			font-size: 15px;
+			font-weight: 600;
+			transition: background 0.2s, transform 0.2s;
+		}
+
+		.btn-login:hover {
+			background: #0d4d82;
+			transform: translateY(-1px);
+		}
+
+		.register-link {
+			margin-top: 27px;
+			color: #718096;
+			text-align: center;
+			font-size: 14px;
+		}
+
+		.register-link a {
+			color: #1261a0;
+			font-weight: 600;
+			text-decoration: none;
+		}
+
+		.validation-summary,
+		.validation-message {
+			color: #d32f2f;
+			font-size: 13px;
+		}
+
+		.validation-summary ul {
+			margin: 0;
+			padding-left: 18px;
+		}
+
+		@media (max-width: 500px) {
+			.auth-card {
+				padding: 30px 22px;
+			}
+		}
+	</style>
+}
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

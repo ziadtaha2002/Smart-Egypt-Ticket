@@ -8,7 +8,6 @@ namespace Smart_Egypt_Ticket.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
-
         public DbSet<Destination> Destinations { get; set; }
         public DbSet<Monument> Monuments { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
@@ -46,6 +45,12 @@ namespace Smart_Egypt_Ticket.Data
             modelBuilder.Entity<Ticket>()
                 .HasIndex(t => t.TicketNumber)
                 .IsUnique();
+
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.Order)
+                .WithMany(order => order.Tickets)
+                .HasForeignKey(t => t.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Ticket>()
                 .HasOne(t => t.UsedByUser)

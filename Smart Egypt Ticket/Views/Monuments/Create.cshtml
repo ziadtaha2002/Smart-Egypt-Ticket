@@ -1,0 +1,20 @@
+@model Smart_Egypt_Ticket.Models.Monument
+
+@{
+    ViewData["Title"] = "Add Monument";
+}
+
+<h1>Add Monument</h1>
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="DestinationId" class="form-label">Destination</label>
+        <select asp-for="DestinationId" class="form-select" asp-items="@(new SelectList(ViewBag.Destinations, "Id", "Name"))"></select>
+        <span asp-validation-for="DestinationId" class="text-danger"></span>
+    </div>
+    <partial name="_Form" model="Model" />
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
